@@ -21,16 +21,7 @@ class LandingPageTest(TestCase):
     def setUp(self):
         """ Initialize testing data """
         self.url = reverse('home')
-        self.person = Person.objects.create(
-            first_name='Alex',
-            last_name='Messer',
-            birth_date=datetime(1996, 9, 5),
-            bio='Cadet at Lviv Army Academy',
-            email='messer1337@gmail.com',
-            jabber='messer@jabber.me',
-            skype='messer1337',
-            other_contacts='Phone: +380148814881'
-        )
+        self.person = Person.objects.all()[0]
 
     def test_response_status_code(self):
         """ Test whether the response status code is OK """
@@ -71,7 +62,10 @@ class LandingPageTest(TestCase):
         self.assertNotIn('object', resp.context)
         self.assertIn('error_message', resp.context)
 
-        self.assertIn('Sorry, but the contact data got deleted', resp.content)
+        self.assertIn(
+            'Sorry, but the Person database record got deleted',
+            resp.content
+        )
 
 
 class PersonTest(TestCase):

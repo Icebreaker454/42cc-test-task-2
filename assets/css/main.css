@@ -1,3 +1,7 @@
-div#header {
+div#header, div#warning {
     border-bottom: 2px solid black;
+}
+
+div.error-message {
+    background-color: #ff7686;
 }

@@ -31,6 +31,5 @@ class Person(models.Model):
 
     def save(self, *args, **kwargs):
         if Person.objects.count() == 1:
-            pass
-        else:
-            super(Person, self).save(*args, **kwargs)
+            return
+        super(Person, self).save(*args, **kwargs)
