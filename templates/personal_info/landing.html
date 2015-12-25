@@ -3,24 +3,23 @@
 {% block content-left %}
   <h2>Personal Info</h2>
   <h4>First Name</h4>
-    <p>Paul</p>
+    <p>{{ object.first_name }}</p>
   <h4>Last Name</h4>
-    <p>Pukach</p>
+    <p>{{ object.last_name }}</p>
   <h4>Date of Bitrh</h4>
-    <p>June 25, 1996</p>
+    <p>{{ object.birth_date|date:"M d, Y" }}</p>
   <h4>Bio</h4>
-    <p>My name is Paul, and I am an applied mathematician.
-  My hobby is developing web-applications.</p>	
+    <p>{{ object.bio | linebreaks }}</p>	
 {% endblock content-left %}
 
 {% block content-right %}
   <h2>Contacts</h2>
   <h4>Email</h4>
-    <p>pavlopukach@gmail.com</p>
+    <p>{{ object.email }}</p>
   <h4>Jabber</h4>
-    <p>icebreaker454@khavr.com</p>
+    <p>{{ object.jabber }}</p>
   <h4>Skype</h4>
-    <p>shoker2506</p>
+    <p>{{ object.skype }}</p>
   <h4>Other contacts</h4>
-  <p>Phone: +380963699598</p>  
+  <p>{{ object.other_contacts | linebreaks}}</p>  
 {% endblock content-right %}
