@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}42cc Test Assignment{% endblock title %}</title>
+
+    <meta http-equiv="X-UA-Compatible" content="chrome=IE7" />
+
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <link rel="stylesheet" href="{% static 'css/screen.css' %}" media="screen, projection"/>
+    <link rel="stylesheet" href="{% static 'css/dist/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    {% block extra_head %}{% endblock extra_head %}
+  </head>
+  <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
+    <div class="container" id="container">
+      <div class="row" id="header">
+        <div class="col-sm-12">
+          <h1>42 Coffee Cups Test Assignment</h1>
+        </div>
+      </div>
+      <div class="row" id="content">
+        {% block content %}{% endblock content %}
+      </div>
+    </div>
+    {% block js %}
+      <script src="{% static 'js/dist/bootstrap.min.js' %}"></script>    
+    {% endblock js %}
+  </body>
+</html>
