@@ -4,9 +4,12 @@
     This module contains functional tests for the
     personal_info application.
 """
+from datetime import datetime
 
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+
+from apps.personal_info.models import Person
 
 # Create your tests here.
 
@@ -18,6 +21,7 @@ class LandingPageTest(TestCase):
     def setUp(self):
         """ Initialize testing data """
         self.url = reverse('home')
+        self.person = Person.objects.all()[0]
 
     def test_response_status_code(self):
         """ Test whether the response status code is OK """
@@ -30,10 +34,10 @@ class LandingPageTest(TestCase):
 
         self.assertIn('object', resp.context)
 
-        self.assertIn('Paul', resp.content)
-        self.assertIn('Pukach', resp.content)
-        self.assertIn('Jun 25, 1996', resp.content)
-        self.assertIn('applied mathematician', resp.content)
+        self.assertIn(self.person.first_name, resp.content)
+        self.assertIn(self.person.last_name, resp.content)
+        self.assertIn(self.person.birth_date, resp.content)
+        self.assertIn(self.person.bio, resp.content)
 
     def test_contact_data_on_page(self):
         """ Test whether the contact data is displayed on the page """
@@ -41,7 +45,41 @@ class LandingPageTest(TestCase):
 
         self.assertIn('object', resp.context)
 
-        self.assertIn('pavlopukach@gmail.com', resp.content)
-        self.assertIn('icebreaker454@khavr.com', resp.content)
-        self.assertIn('shoker2506', resp.content)
-        self.assertIn('+380963699598', resp.content)
+        self.assertIn(self.person.email, resp.content)
+        self.assertIn(self.person.jabber, resp.content)
+        self.assertIn(self.person.skype, resp.content)
+        self.assertIn(self.person.other_contacts, resp.content)
+
+
+class PersonTest(TestCase):
+    """
+    This is a set of tests for the Person model
+    """
+    def setUp(self):
+        """ Initialize testing data """
+        self.person = Person.objects.create(
+            first_name='Alex',
+            last_name='Messer',
+            birth_date=datetime(1996, 9, 5),
+            bio='Cadet at Lviv Army Academy',
+            email='messer1337@gmail.com',
+            skype='messer1337'
+        )
+
+    def test_string_representation(self):
+        """ Test whether the model's string representation is correct """
+        self.assertEqual(self.person.__unicode__(), 'Alex Messer')
+
+    def test_single_model_entry(self):
+        """ Test that there is always no more than one model entry """
+        self.assertEqual(Person.objects.count(), 1)
+
+        Person.objects.create(
+            first_name='Evan',
+            last_name='Dorms',
+            birth_date=datetime(1990, 1, 1),
+            bio='sample',
+            email='sample@sample.com'
+        )
+
+        self.assertEqual(Person.objects.count(), 1)
