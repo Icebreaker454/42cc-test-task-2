@@ -32,7 +32,7 @@ class LandingPageTest(TestCase):
 
         self.assertIn('Paul', resp.content)
         self.assertIn('Pukach', resp.content)
-        self.assertIn('25 Jun, 1996', resp.content)
+        self.assertIn('Jun 25, 1996', resp.content)
         self.assertIn('applied mathematician', resp.content)
 
     def test_contact_data_on_page(self):
