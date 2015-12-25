@@ -3,9 +3,10 @@
 """
 This file contains views for the personal_info app
 """
-from datetime import datetime
 
 from django.views.generic import TemplateView
+
+from apps.personal_info.models import Person
 
 
 class Home(TemplateView):
@@ -16,15 +17,10 @@ class Home(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(Home, self).get_context_data(*args, **kwargs)
-        context['object'] = {
-            'first_name': 'Paul',
-            'last_name': 'Pukach',
-            'birth_date': datetime(1996, 6, 25),
-            'bio': 'My name is Paul and I am an applied mathematician.'
-            ' My hobby is developing web-applications',
-            'email': 'pavlopukach@gmail.com',
-            'jabber': 'icebreaker454@khavr.com',
-            'skype': 'shoker2506',
-            'other_contacts': 'Phone: +380963699598'
-        }
+        person = Person.objects.all()
+        if person.exists():
+            context['object'] = person[0]
+        else:
+            context['error_message'] = \
+                'Sorry, but the Person database record got deleted'
         return context

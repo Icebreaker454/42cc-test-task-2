@@ -1,0 +1,30 @@
+[
+  {
+    "model": "personal_info.Person",
+    "pk": 1,
+    "fields": {
+      "first_name": "Paul",
+      "last_name": "Pukach",
+      "birth_date": "1996-06-25",
+      "bio": "My name is Paul and I am an applied mathematician. My hobby is developing web-applications",
+      "email": "pavlopukach@gmail.com",
+      "jabber": "icebreaker454@khavr.com",
+      "skype": "shoker2506",
+      "other_contacts": "Phone: +3809636999598"
+    }
+  },
+  {
+    "model": "auth.User",
+    "pk": 1,
+    "fields": {
+        "username": "admin", 
+        "first_name": "Admin", 
+        "last_name": "Admin", 
+        "is_active": true, 
+        "is_superuser": true, 
+        "is_staff": true, 
+        "password": "pbkdf2_sha256$12000$ytxjTnyU963r$b9qN6KMDmrGZYl59xc/WAJfcKHiPJ9UEzPhLzzV1CrI=", 
+        "email": "admin@admin.com"
+    }
+  }
+]

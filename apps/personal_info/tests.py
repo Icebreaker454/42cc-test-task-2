@@ -21,7 +21,16 @@ class LandingPageTest(TestCase):
     def setUp(self):
         """ Initialize testing data """
         self.url = reverse('home')
-        self.person = Person.objects.all()[0]
+        self.person = Person.objects.create(
+            first_name='Alex',
+            last_name='Messer',
+            birth_date=datetime(1996, 9, 5),
+            bio='Cadet at Lviv Army Academy',
+            email='messer1337@gmail.com',
+            jabber='messer@jabber.me',
+            skype='messer1337',
+            other_contacts='Phone: +380148814881'
+        )
 
     def test_response_status_code(self):
         """ Test whether the response status code is OK """
@@ -36,7 +45,10 @@ class LandingPageTest(TestCase):
 
         self.assertIn(self.person.first_name, resp.content)
         self.assertIn(self.person.last_name, resp.content)
-        self.assertIn(self.person.birth_date, resp.content)
+        self.assertIn(
+            datetime.strftime(self.person.birth_date, '%b %d, %Y'),
+            resp.content
+        )
         self.assertIn(self.person.bio, resp.content)
 
     def test_contact_data_on_page(self):
@@ -49,6 +61,17 @@ class LandingPageTest(TestCase):
         self.assertIn(self.person.jabber, resp.content)
         self.assertIn(self.person.skype, resp.content)
         self.assertIn(self.person.other_contacts, resp.content)
+
+    def test_no_person_data(self):
+        """ Test the behavior if the contact data got deleted """
+        self.person.delete()
+
+        resp = self.client.get(self.url)
+
+        self.assertNotIn('object', resp.context)
+        self.assertIn('error_message', resp.context)
+
+        self.assertIn('Sorry, but the contact data got deleted', resp.content)
 
 
 class PersonTest(TestCase):
