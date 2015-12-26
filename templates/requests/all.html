@@ -1,0 +1,23 @@
+{% extends "__base.html" %}
+
+{% block content %}
+  <div class="col-sm-12">
+    <h3>First 10 HTTP requests</h3>
+    <table class="table table-hover request-table">
+      <thead>
+          <th class="th-number">No.</th>
+          <th class="th-path">Path</th>
+          <th class="th-method">Method</th>
+      </thead>
+      <tbody>
+        {% for i in 'abcde' %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>www.somesite.com/path-{{i}}</td>
+            <td>{% cycle 'GET' 'POST' %}</td>
+          </tr>  
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>  
+{% endblock content %}

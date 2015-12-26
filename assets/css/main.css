@@ -1,7 +1,51 @@
-div#header, div#warning {
+#header, #warning, #navigation {
     border-bottom: 2px solid black;
 }
 
 div.error-message {
     background-color: #ff7686;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.nav-group {
+    overflow: auto;
+}
+.nav-group-footer {
+    clear: left;
+    height: 0;
+}
+.nav-item {
+    text-align: center;
+    width:20%;
+    height:65px;              
+    float: left;
+    color: black;
+}
+.nav-item:hover {
+    text-align: center;
+    width:20%;
+    height:65px;              
+    float: left;
+    background-color: #efefef;
+    cursor: pointer;   
+}
+.nav-item.active {
+    background-color: #ccb
+}
+
+.request-table {
+    width: 100%;
+}
+
+.th-number {
+    width: 10%;
+}
+.th-path {
+    width: 70%;
+}
+.th-method {
+    width: 20%;
 }

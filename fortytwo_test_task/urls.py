@@ -12,6 +12,7 @@ urlpatterns = patterns(
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^home/', include('apps.personal_info.urls')),
+    url(r'^requests/', include('apps.requests.urls')),
     url(
         r'^$',
         RedirectView.as_view(url='/home/', permanent=False),

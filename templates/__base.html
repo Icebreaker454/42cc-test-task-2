@@ -31,6 +31,24 @@
           </div>
         </div>
       {% endif %}
+      <div class="row" id="navigation">
+        <div class="col-sm-8 nav-group">
+          <a href="{% url 'home' %}">
+            <div class="nav-item{% if 'home' in request.path %} active{% endif %}">
+              <h3>Home</h3>
+            </div>
+          </a>
+          <a href="{% url 'requests' %}">
+            <div class="nav-item{% if 'requests' in request.path %} active{% endif %}">
+              <h3>Requests</h3>
+            </div>
+          </a>
+          <div class="nav-group-footer"></div>
+        </div>
+        <div class="col-sm-4 text-center">
+          <h3></h3>
+        </div>
+      </div>
       <div class="row" id="content">
         {% block content %}{% endblock content %}
       </div>
