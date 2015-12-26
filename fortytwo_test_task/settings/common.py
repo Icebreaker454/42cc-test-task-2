@@ -125,5 +125,51 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': "[%(asctime)s] %(levelname)s %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'debug': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '42-test-task.log',
+            'formatter': 'verbose'
+        },
+        'info': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': '42-test-task.log',
+            'formatter': 'verbose'
+        },
+        'warning': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': '42-test-task.log',
+            'formatter': 'verbose'
+        },
+        'error': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': '42-test-task.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'personal_info': {
+            'handlers': ['debug', 'info', 'warning', 'error'],
+            'level': 'DEBUG',
+        },
+    }
+}
+
 # Turn off south during test
 SOUTH_TESTS_MIGRATE = False

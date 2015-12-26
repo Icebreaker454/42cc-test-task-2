@@ -3,8 +3,11 @@
 """
 This file contains models for the personal_info app
 """
+import logging
 
 from django.db import models
+
+logger = logging.getLogger('personal_info')
 
 
 class Person(models.Model):
@@ -30,6 +33,11 @@ class Person(models.Model):
         return '%s %s' % (self.first_name, self.last_name)
 
     def save(self, *args, **kwargs):
-        if Person.objects.count() == 1:
+        """ Overriding save() not to store more than 1 record """
+        if self.pk is None and Person.objects.count() == 1:
+            logger.warn(
+                'Cannot add more than 1 person into database.'
+                ' Changes will not be saved.'
+            )
             return
         super(Person, self).save(*args, **kwargs)
