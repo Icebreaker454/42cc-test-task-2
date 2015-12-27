@@ -18,24 +18,15 @@ class Home(TemplateView):
     """
     template_name = 'personal_info/landing.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        """ Logging the request path """
-        logger.info('Request path: %s' % request.path)
-        return super(Home, self).dispatch(request, *args, **kwargs)
-
     def get_context_data(self, *args, **kwargs):
         """ Gets context data for the template """
         logger.info('Processing context data for Home view')
+        logger.info('Request data: \n %s' % self.request)
         context = super(Home, self).get_context_data(*args, **kwargs)
-        person = Person.objects.all()
-        if person.exists():
-            context['object'] = person[0]
-            logger.debug('Data shown: %s' % person[0])
-        else:
-            context['error_message'] = \
-                'Sorry, but the Person database record got deleted'
+        person = Person.objects.first()
+        context['object'] = person
+        if person is None:
             logger.warn(
                 'Person database record has been deleted.'
-                ' Displaying error message'
             )
         return context

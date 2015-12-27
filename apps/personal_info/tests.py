@@ -59,13 +59,40 @@ class LandingPageTest(TestCase):
 
         resp = self.client.get(self.url)
 
-        self.assertNotIn('object', resp.context)
-        self.assertIn('error_message', resp.context)
+        self.assertIn('object', resp.context)
+        self.assertTrue(resp.context['object'] is None)
 
         self.assertIn(
             'Sorry, but the Person database record got deleted',
             resp.content
         )
+
+    def test_two_person_records(self):
+        """
+        Test that whether there are more than 1 Person record, only
+        the first one gets displayed
+        """
+        Person.objects.create(
+            first_name='Evan',
+            last_name='Dorms',
+            birth_date=datetime(1990, 1, 1),
+            bio='sample',
+            email='sample@sample.com'
+        )
+        resp = self.client.get(self.url)
+
+        self.assertIn(self.person.first_name, resp.content)
+        self.assertIn(self.person.last_name, resp.content)
+        self.assertIn(
+            datetime.strftime(self.person.birth_date, '%b %d, %Y'),
+            resp.content
+        )
+        self.assertIn(self.person.bio, resp.content)
+
+        self.assertIn(self.person.email, resp.content)
+        self.assertIn(self.person.jabber, resp.content)
+        self.assertIn(self.person.skype, resp.content)
+        self.assertIn(self.person.other_contacts, resp.content)
 
 
 class PersonTest(TestCase):
@@ -86,17 +113,3 @@ class PersonTest(TestCase):
     def test_string_representation(self):
         """ Test whether the model's string representation is correct """
         self.assertEqual(self.person.__unicode__(), 'Alex Messer')
-
-    def test_single_model_entry(self):
-        """ Test that there is always no more than one model entry """
-        self.assertEqual(Person.objects.count(), 1)
-
-        Person.objects.create(
-            first_name='Evan',
-            last_name='Dorms',
-            birth_date=datetime(1990, 1, 1),
-            bio='sample',
-            email='sample@sample.com'
-        )
-
-        self.assertEqual(Person.objects.count(), 1)

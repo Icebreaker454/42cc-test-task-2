@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'south',
 
     'apps.personal_info',
 )
@@ -141,25 +142,25 @@ LOGGING = {
         'debug': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '42-test-task.log',
+            'filename': 'debug.log',
             'formatter': 'verbose'
         },
         'info': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': '42-test-task.log',
+            'filename': 'info.log',
             'formatter': 'verbose'
         },
         'warning': {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
-            'filename': '42-test-task.log',
+            'filename': 'warning.log',
             'formatter': 'verbose'
         },
         'error': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': '42-test-task.log',
+            'filename': 'error.log',
             'formatter': 'verbose'
         },
     },

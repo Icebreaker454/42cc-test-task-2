@@ -31,13 +31,3 @@ class Person(models.Model):
     def __unicode__(self):
         """ String representarion of the model """
         return '%s %s' % (self.first_name, self.last_name)
-
-    def save(self, *args, **kwargs):
-        """ Overriding save() not to store more than 1 record """
-        if self.pk is None and Person.objects.count() == 1:
-            logger.warn(
-                'Cannot add more than 1 person into database.'
-                ' Changes will not be saved.'
-            )
-            return
-        super(Person, self).save(*args, **kwargs)

@@ -24,13 +24,8 @@
           <h1>42 Coffee Cups Test Assignment</h1>
         </div>
       </div>
-      {% if error_message %}
-        <div class="row" id="warning">
-          <div class="col-sm-12 error-message">
-            <h4>{{ error_message }}</h4>
-          </div>
-        </div>
-      {% endif %}
+      {% block errors %}
+      {% endblock errors %}
       <div class="row" id="content">
         {% block content %}{% endblock content %}
       </div>
