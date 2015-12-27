@@ -15,6 +15,6 @@ urlpatterns = patterns(
     url(
         r'^$',
         RedirectView.as_view(url='/home/', permanent=False),
-        name='index'
+        name='redirect_index'
     ),
 )
