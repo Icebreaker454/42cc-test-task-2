@@ -1,25 +1,47 @@
 {% extends "__base.html" %}
 
+{% block title %}
+  {{ block.super }} | Requests
+{% endblock title %}
+
+{% block errors %}
+  {% if not requests %}
+    <div class="row" id="warning">
+      <div class="col-sm-12 error-message">
+        <h4>Sorry, but there are no Requests by now</h4>
+      </div>
+    </div>
+  {% endif %}
+{% endblock errors %}
+
 {% block content %}
+{% if requests %}
   <div class="col-sm-12">
     <h3>Last 10 HTTP requests</h3>
     <table class="table table-hover request-table">
       <thead>
-          <th class="th-number">No.</th>
-          <th class="th-path">Path</th>
-          <th class="th-date">Date</th>
-          <th class="th-method">Method</th>
+          <th class="th-number" width="5%">No.</th>
+          <th class="th-path" width="25%">Path</th>
+          <th class="th-date" width="15%">Time</th>
+          <th class="th-useragent" width="30%">User Agent</th>
+          <th class="th-method" width="10%">Method</th>
+          <th class="th-secure"wifth="10%">Is Secure?</th>
+          <th class="th-ajax"width="5%">AJAX?</th>
       </thead>
       <tbody>
         {% for request in requests %}
           <tr>
-              <td>{{ forloop.counter }}</td>
-              <td>{{ request.path }}</td>
-              <td>{{ request.date|date:"Y-m-d H:m:s" }}</td>
-              <td>{{ request.method }}</td>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ request.path }}</td>
+            <td>{{ request.time|date:"Y-m-d H:m:s" }}</td>
+            <td>{{ request.user_agent }}</td>
+            <td>{{ request.method }}</td>
+            <td>{{ request.is_secure|yesno:"+,-" }}</td>
+            <td>{{ request.is_ajax|yesno:"+,-" }}</td>
           </tr>  
         {% endfor %}
       </tbody>
     </table>
-  </div>  
+  </div>
+{% endif %}
 {% endblock content %}

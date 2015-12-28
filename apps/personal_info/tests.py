@@ -23,6 +23,12 @@ class LandingPageTest(TestCase):
         self.url = reverse('home')
         self.person = Person.objects.all()[0]
 
+    def test_page_title(self):
+        """ Test that page title is as follows: 42cc|<page> """
+        resp = self.client.get(self.url)
+
+        self.assertContains(resp, '42cc Test Assignment | Home')
+
     def test_personal_data_on_page(self):
         """ Test whether personal data is displayed on the page """
         resp = self.client.get(self.url)

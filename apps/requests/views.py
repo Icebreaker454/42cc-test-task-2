@@ -4,9 +4,9 @@
 This file contains views for the requests
 application
 """
-from datetime import datetime
-
 from django.views.generic import ListView
+
+from apps.requests.models import WebRequest
 
 
 class Requests(ListView):
@@ -16,10 +16,4 @@ class Requests(ListView):
 
     def get_queryset(self, *args, **kwargs):
         """ Return the queryset for the model """
-        return [
-            {
-                'path': 'www.somesite.com/path-1',
-                'date': datetime.now(),
-                'method': 'GET'
-            }
-        ]
+        return WebRequest.objects.order_by('-time')[:10]

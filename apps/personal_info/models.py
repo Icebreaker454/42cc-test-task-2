@@ -3,11 +3,7 @@
 """
 This file contains models for the personal_info app
 """
-import logging
-
 from django.db import models
-
-logger = logging.getLogger('personal_info')
 
 
 class Person(models.Model):

@@ -39,16 +39,3 @@ div.error-message {
 .request-table {
     width: 100%;
 }
-
-.th-number {
-    width: 5%;
-}
-.th-path {
-    width: 65%;
-}
-.th-date {
-    width: 20%;
-}
-.th-method {
-    width: 10%;
-}
