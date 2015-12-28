@@ -11,12 +11,12 @@
           <th class="th-method">Method</th>
       </thead>
       <tbody>
-        {% for i in 'abcde' %}
+        {% for request in requests %}
           <tr>
-              <td>{{forloop.counter}}</td>
-              <td>www.somesite.com/path-{{i}}</td>
-              <td>2015-12-21 18:4{{forloop.counter}}</td>
-              <td>{% cycle 'GET' 'POST' %}</td>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ request.path }}</td>
+              <td>{{ request.date|date:"Y-m-d H:m:s" }}</td>
+              <td>{{ request.method }}</td>
           </tr>  
         {% endfor %}
       </tbody>
