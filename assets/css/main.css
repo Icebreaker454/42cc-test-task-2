@@ -41,11 +41,14 @@ div.error-message {
 }
 
 .th-number {
-    width: 10%;
+    width: 5%;
 }
 .th-path {
-    width: 70%;
+    width: 65%;
+}
+.th-date {
+    width: 20%;
 }
 .th-method {
-    width: 20%;
+    width: 10%;
 }

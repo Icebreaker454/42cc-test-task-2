@@ -24,8 +24,7 @@
           <h1>42 Coffee Cups Test Assignment</h1>
         </div>
       </div>
-      {% block errors %}
-      {% endblock errors %}
+      
       <div class="row" id="navigation">
         <div class="col-sm-8 nav-group">
           <a href="{% url 'home' %}">
@@ -44,6 +43,8 @@
           <h3></h3>
         </div>
       </div>
+      {% block errors %}
+      {% endblock errors %}
       <div class="row" id="content">
         {% block content %}{% endblock content %}
       </div>
