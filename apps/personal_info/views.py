@@ -25,8 +25,5 @@ class Home(TemplateView):
         context = super(Home, self).get_context_data(*args, **kwargs)
         person = Person.objects.first()
         context['object'] = person
-        if person is None:
-            logger.warn(
-                'Person database record has been deleted.'
-            )
+        logger.debug('Showing person: %s' % person)
         return context

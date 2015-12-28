@@ -23,24 +23,19 @@ class LandingPageTest(TestCase):
         self.url = reverse('home')
         self.person = Person.objects.all()[0]
 
-    def test_response_status_code(self):
-        """ Test whether the response status code is OK """
-        resp = self.client.get(self.url)
-        self.assertEqual(resp.status_code, 200)
-
     def test_personal_data_on_page(self):
         """ Test whether personal data is displayed on the page """
         resp = self.client.get(self.url)
 
         self.assertIn('object', resp.context)
 
-        self.assertIn(self.person.first_name, resp.content)
-        self.assertIn(self.person.last_name, resp.content)
-        self.assertIn(
-            datetime.strftime(self.person.birth_date, '%b %d, %Y'),
-            resp.content
+        self.assertContains(resp, self.person.first_name)
+        self.assertContains(resp, self.person.last_name)
+        self.assertContains(
+            resp,
+            datetime.strftime(self.person.birth_date, '%b %d, %Y')
         )
-        self.assertIn(self.person.bio, resp.content)
+        self.assertContains(resp, self.person.bio)
 
     def test_contact_data_on_page(self):
         """ Test whether the contact data is displayed on the page """
@@ -48,10 +43,10 @@ class LandingPageTest(TestCase):
 
         self.assertIn('object', resp.context)
 
-        self.assertIn(self.person.email, resp.content)
-        self.assertIn(self.person.jabber, resp.content)
-        self.assertIn(self.person.skype, resp.content)
-        self.assertIn(self.person.other_contacts, resp.content)
+        self.assertContains(resp, self.person.email)
+        self.assertContains(resp, self.person.jabber)
+        self.assertContains(resp, self.person.skype)
+        self.assertContains(resp, self.person.other_contacts)
 
     def test_no_person_data(self):
         """ Test the behavior if the contact data got deleted """
@@ -62,9 +57,9 @@ class LandingPageTest(TestCase):
         self.assertIn('object', resp.context)
         self.assertTrue(resp.context['object'] is None)
 
-        self.assertIn(
-            'Sorry, but the Person database record got deleted',
-            resp.content
+        self.assertContains(
+            resp,
+            'Sorry, but the Person database record got deleted'
         )
 
     def test_two_person_records(self):
@@ -81,18 +76,18 @@ class LandingPageTest(TestCase):
         )
         resp = self.client.get(self.url)
 
-        self.assertIn(self.person.first_name, resp.content)
-        self.assertIn(self.person.last_name, resp.content)
-        self.assertIn(
-            datetime.strftime(self.person.birth_date, '%b %d, %Y'),
-            resp.content
+        self.assertContains(resp, self.person.first_name)
+        self.assertContains(resp, self.person.last_name)
+        self.assertContains(
+            resp,
+            datetime.strftime(self.person.birth_date, '%b %d, %Y')
         )
-        self.assertIn(self.person.bio, resp.content)
+        self.assertContains(resp, self.person.bio)
 
-        self.assertIn(self.person.email, resp.content)
-        self.assertIn(self.person.jabber, resp.content)
-        self.assertIn(self.person.skype, resp.content)
-        self.assertIn(self.person.other_contacts, resp.content)
+        self.assertContains(resp, self.person.email)
+        self.assertContains(resp, self.person.jabber)
+        self.assertContains(resp, self.person.skype)
+        self.assertContains(resp, self.person.other_contacts)
 
 
 class PersonTest(TestCase):

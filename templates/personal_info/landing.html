@@ -11,42 +11,47 @@
   {% endif %}
 {% endblock errors %}
 
+
 {% block content-left %}
-  <h2>Personal Info</h2>
-  {% if object.first_name %}
-    <h4>First Name</h4>
-    <p>{{ object.first_name }}</p>
-  {% endif %}
-  {% if object.last_name %}
-    <h4>Last Name</h4>
-    <p>{{ object.last_name }}</p>
-  {% endif %}
-  {% if object.birth_date %}
-    <h4>Date of Bitrh</h4>
-    <p>{{ object.birth_date|date:"M d, Y" }}</p>
-  {% endif %}
-  {% if object.bio %}
-    <h4>Bio</h4>
-    <p>{{ object.bio | linebreaks }}</p>
+  {% if object %}
+    <h2>Personal Info</h2>
+    {% if object.first_name %}
+      <h4>First Name</h4>
+      <p>{{ object.first_name }}</p>
+    {% endif %}
+    {% if object.last_name %}
+      <h4>Last Name</h4>
+      <p>{{ object.last_name }}</p>
+    {% endif %}
+    {% if object.birth_date %}
+      <h4>Date of Bitrh</h4>
+      <p>{{ object.birth_date|date:"M d, Y" }}</p>
+    {% endif %}
+    {% if object.bio %}
+      <h4>Bio</h4>
+      <p>{{ object.bio | linebreaks }}</p>
+    {% endif %}
   {% endif %}  	
 {% endblock content-left %}
 
 {% block content-right %}
-  <h2>Contacts</h2>
-  {% if object.email %}
-    <h4>Email</h4>
-    <p>{{ object.email }}</p>
-  {% endif %}
-  {% if object.jabber %}
-    <h4>Jabber</h4>
-    <p>{{ object.jabber }}</p>
-  {% endif %}
-  {% if object.skype %}
-    <h4>Skype</h4>
-    <p>{{ object.skype }}</p>
-  {% endif %}
-  {% if object.other_contacts %}
-    <h4>Other contacts</h4>
-    <p>{{ object.other_contacts | linebreaks}}</p>
+  {% if object %}
+    <h2>Contacts</h2>
+    {% if object.email %}
+      <h4>Email</h4>
+      <p>{{ object.email }}</p>
+    {% endif %}
+    {% if object.jabber %}
+      <h4>Jabber</h4>
+      <p>{{ object.jabber }}</p>
+    {% endif %}
+    {% if object.skype %}
+      <h4>Skype</h4>
+      <p>{{ object.skype }}</p>
+    {% endif %}
+    {% if object.other_contacts %}
+      <h4>Other contacts</h4>
+      <p>{{ object.other_contacts | linebreaks}}</p>
+    {% endif %}
   {% endif %}
 {% endblock content-right %}
