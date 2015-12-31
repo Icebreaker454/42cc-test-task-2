@@ -182,6 +182,10 @@ LOGGING = {
             'handlers': ['debug', 'info', 'warning', 'error'],
             'level': 'DEBUG',
         },
+        'requests': {
+            'handlers': ['debug', 'info', 'warning', 'error'],
+            'level': 'DEBUG',
+        },
     }
 }
 

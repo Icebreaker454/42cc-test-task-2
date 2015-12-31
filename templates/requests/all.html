@@ -20,15 +20,17 @@
 {% if requests %}
   <div class="col-sm-12">
     <h3>Last 10 HTTP requests</h3>
-    <table class="table table-hover request-table" data-count="">
+    <table
+      class="table table-hover request-table js-requests"
+      data-notification-url="{% url 'rq_notifications' requests.0.id %}">
       <thead>
-          <th class="th-number" width="5%">No.</th>
+          <th class="th-number" width="3%">No.</th>
           <th class="th-path" width="25%">Path</th>
           <th class="th-date" width="15%">Time</th>
           <th class="th-useragent" width="30%">User Agent</th>
           <th class="th-method" width="10%">Method</th>
-          <th class="th-secure"wifth="10%">Is Secure?</th>
-          <th class="th-ajax"width="5%">AJAX?</th>
+          <th class="th-secure"wifth="9%">Is Secure?</th>
+          <th class="th-ajax"width="3%">AJAX?</th>
       </thead>
       <tbody>
         {% for request in requests %}
@@ -50,5 +52,5 @@
 
 {% block js %}
   {{ block.super }}
-  <script src="{% static "js/dist/jquery.min.js" %}"></script>
+  <script src="{% static 'js/request_notification.js' %}"></script> 
 {% endblock js %}

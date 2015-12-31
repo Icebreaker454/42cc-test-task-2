@@ -8,17 +8,11 @@ from django.conf.urls import patterns, url
 from apps.requests.views import Requests
 
 urlpatterns = patterns(
-    '',
+    'apps.requests.views',
     url(r'^$', Requests.as_view(), name='requests'),
-    """    url(
-            r'^/xhr/notifications/$',
-            'apps.requests.views.notifications',
-            name='notifications'
-        ),
-        url(
-            r'^/xhr/notifications/set$',
-            'apps.requests.views.notifications',
-            name='notifications'
-        )
-    """
+    url(
+        r'^xhr/get_notifications/(?P<last_request>\d+)',
+        'get_request_notification',
+        name='rq_notifications'
+    )
 )

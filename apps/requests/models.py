@@ -15,7 +15,6 @@ class WebRequest(models.Model):
 
     path = models.SlugField()
     method = models.CharField(max_length=10)
-    status_code = models.PositiveSmallIntegerField(default=200)
     user_agent = models.CharField(max_length=256, blank=True, null=True)
     time = models.DateTimeField(auto_now_add=True)
     is_secure = models.BooleanField(default=False)
