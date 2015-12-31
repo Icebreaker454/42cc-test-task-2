@@ -1,5 +1,7 @@
 {% extends "__base.html" %}
 
+{% load staticfiles %}
+
 {% block title %}
   {{ block.super }} | Requests
 {% endblock title %}
@@ -18,7 +20,7 @@
 {% if requests %}
   <div class="col-sm-12">
     <h3>Last 10 HTTP requests</h3>
-    <table class="table table-hover request-table">
+    <table class="table table-hover request-table" data-count="">
       <thead>
           <th class="th-number" width="5%">No.</th>
           <th class="th-path" width="25%">Path</th>
@@ -45,3 +47,8 @@
   </div>
 {% endif %}
 {% endblock content %}
+
+{% block js %}
+  {{ block.super }}
+  <script src="{% static "js/dist/jquery.min.js" %}"></script>
+{% endblock js %}

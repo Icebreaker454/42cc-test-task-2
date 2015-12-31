@@ -9,5 +9,16 @@ from apps.requests.views import Requests
 
 urlpatterns = patterns(
     '',
-    url(r'^$', Requests.as_view(), name='requests')
+    url(r'^$', Requests.as_view(), name='requests'),
+    """    url(
+            r'^/xhr/notifications/$',
+            'apps.requests.views.notifications',
+            name='notifications'
+        ),
+        url(
+            r'^/xhr/notifications/set$',
+            'apps.requests.views.notifications',
+            name='notifications'
+        )
+    """
 )
