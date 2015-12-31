@@ -23,7 +23,6 @@ class RequestsPageTest(TestCase):
         self.request = WebRequest.objects.create(
             path='/test/',
             method='GET',
-            status_code=200,
             user_agent='TEST AGENT',
             is_secure=True,
             is_ajax=False
@@ -42,14 +41,6 @@ class RequestsPageTest(TestCase):
         self.assertContains(resp, 'Last 10 HTTP requests')
         self.assertContains(resp, self.request.path)
         self.assertContains(resp, self.request.method)
-
-    def test_no_requests_data(self):
-        """ Test the behaviour when there are no requests in the DB """
-        self.request.delete()
-
-        resp = self.client.get(self.url)
-
-        self.assertContains(resp, 'Sorry, but there are no Requests by now')
 
 
 class WebRequestTest(TestCase):
@@ -129,7 +120,6 @@ class AJAXGetNotificationsTest(TestCase):
         self.last_request = WebRequest.objects.create(
             path='www.test.com/test/',
             method='GET',
-            status_code=200,
             user_agent='TEST AGENT',
             is_secure=True,
             is_ajax=False
@@ -183,7 +173,6 @@ class AJAXGetNotificationsTest(TestCase):
         WebRequest.objects.create(
             path='www.test.com/test/',
             method='GET',
-            status_code=200,
             user_agent='TEST AGENT',
             is_secure=True,
             is_ajax=False
