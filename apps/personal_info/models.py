@@ -5,8 +5,6 @@ This file contains models for the personal_info app
 """
 from django.db import models
 
-from fortytwo_test_task.settings.common import MEDIA_ROOT
-
 
 class Person(models.Model):
     """ The person model class """
@@ -27,7 +25,7 @@ class Person(models.Model):
     other_contacts = models.TextField(blank=True, null=True)
 
     # picture
-    photo = models.ImageField(upload_to=MEDIA_ROOT, blank=True, null=True)
+    photo = models.ImageField(upload_to='pictures', blank=True, null=True)
 
     def __unicode__(self):
         """ String representarion of the model """

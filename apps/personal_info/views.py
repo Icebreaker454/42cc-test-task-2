@@ -6,8 +6,10 @@ This file contains views for the personal_info app
 import logging
 
 from django.views.generic import TemplateView
+from django.views.generic.edit import UpdateView
 
 from apps.personal_info.models import Person
+from apps.personal_info.forms import PersonForm
 
 logger = logging.getLogger('personal_info')
 
@@ -27,3 +29,15 @@ class Home(TemplateView):
         context['object'] = person
         logger.debug('Showing person: %s' % person)
         return context
+
+
+class EditPerson(UpdateView):
+    """
+    The class-based view for editing Persons
+    """
+    form_class = PersonForm
+    template_name = 'personal_info/person_edit.html'
+
+    def get_object(self):
+        """ View that gets the pbject to edit """
+        return Person.objects.first()

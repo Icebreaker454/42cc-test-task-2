@@ -19,13 +19,13 @@
   </head>
   <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
     <div class="container" id="container">
-      <div class="row" id="header">
+      <div class="row bordered-row" id="header">
         <div class="col-sm-12">
           <h1>42 Coffee Cups Test Assignment</h1>
         </div>
       </div>
       
-      <div class="row" id="navigation">
+      <div class="row bordered-row" id="navigation">
         <div class="col-sm-8 nav-group">
           <a href="{% url 'home' %}">
             <div class="nav-item{% if 'home' in request.path %} active{% endif %}">
@@ -39,8 +39,10 @@
           </a>
           <div class="nav-group-footer"></div>
         </div>
-        <div class="col-sm-4 text-center">
-          <h3></h3>
+        <div class="col-sm-4 text-right">
+          <a href="{% url 'edit_person' %}" class="base-link">
+            <h3>Edit Person data</h3>
+          </a>
         </div>
       </div>
       {% block errors %}

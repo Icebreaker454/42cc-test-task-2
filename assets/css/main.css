@@ -1,5 +1,9 @@
-#header, #warning, #navigation {
+.bordered-row {
     border-bottom: 2px solid black;
+}
+
+#top_row {
+    margin-top: 1%
 }
 
 div.error-message {
@@ -8,6 +12,16 @@ div.error-message {
 
 .text-center {
     text-align: center;
+}
+.text-right {
+    text-align: right;
+}
+
+.base-link {
+    color: black;
+}
+.base-link:hover {
+    color: black;
 }
 
 .nav-group {
@@ -33,9 +47,32 @@ div.error-message {
     cursor: pointer;   
 }
 .nav-item.active {
-    background-color: #ccb
+    background-color: #ccccbb
 }
 
 .request-table {
     width: 100%;
+}
+.done-button {
+    color: black;
+    font-size: 28px;
+    background-color: #ccccbb;
+}
+.done-button:hover{
+    color: black;
+    background-color: #969686; 
+}
+.cancel-button {
+    color: black;
+    font-size: 28px;
+    background-color: #ff7686;
+}
+.cancel-button:hover {
+    color: black;
+    background-color: #fe5b6e;
+}
+
+.form-label{
+    font-size: 18px;
+    font-weight: normal;
 }

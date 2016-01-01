@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
+    'crispy_forms',
 
     'apps.personal_info',
     'apps.requests'
@@ -138,6 +139,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 LOGGING = {
     'version': 1,

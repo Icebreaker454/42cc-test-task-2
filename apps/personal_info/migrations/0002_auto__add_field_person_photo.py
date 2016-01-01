@@ -8,24 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Person'
-        db.create_table(u'personal_info_person', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('birth_date', self.gf('django.db.models.fields.DateField')()),
-            ('bio', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=128)),
-            ('jabber', self.gf('django.db.models.fields.EmailField')(max_length=128, null=True, blank=True)),
-            ('skype', self.gf('django.db.models.fields.CharField')(max_length=64, null=True, blank=True)),
-            ('other_contacts', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-        ))
-        db.send_create_signal(u'personal_info', ['Person'])
+        # Adding field 'Person.photo'
+        db.add_column(u'personal_info_person', 'photo',
+                      self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'Person'
-        db.delete_table(u'personal_info_person')
+        # Deleting field 'Person.photo'
+        db.delete_column(u'personal_info_person', 'photo')
 
 
     models = {
@@ -39,6 +30,7 @@ class Migration(SchemaMigration):
             'jabber': ('django.db.models.fields.EmailField', [], {'max_length': '128', 'null': 'True', 'blank': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'other_contacts': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'photo': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'skype': ('django.db.models.fields.CharField', [], {'max_length': '64', 'null': 'True', 'blank': 'True'})
         }
     }
