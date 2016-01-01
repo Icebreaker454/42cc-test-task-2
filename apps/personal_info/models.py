@@ -5,6 +5,8 @@ This file contains models for the personal_info app
 """
 from django.db import models
 
+from fortytwo_test_task.settings.common import MEDIA_ROOT
+
 
 class Person(models.Model):
     """ The person model class """
@@ -23,6 +25,9 @@ class Person(models.Model):
     jabber = models.EmailField(max_length=128, blank=True, null=True)
     skype = models.CharField(max_length=64, blank=True, null=True)
     other_contacts = models.TextField(blank=True, null=True)
+
+    # picture
+    photo = models.ImageField(upload_to=MEDIA_ROOT, blank=True, null=True)
 
     def __unicode__(self):
         """ String representarion of the model """
