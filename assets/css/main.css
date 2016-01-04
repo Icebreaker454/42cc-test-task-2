@@ -71,7 +71,9 @@ div.error-message {
     color: black;
     background-color: #fe5b6e;
 }
-
+.person-edit-form {
+    margin-top: 10px;
+}
 .form-label{
     font-size: 18px;
     font-weight: normal;

@@ -12,6 +12,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML
 from crispy_forms.layout import Submit
 from crispy_forms.layout import Layout
+from crispy_forms.layout import Fieldset
 
 from apps.personal_info.models import Person
 from apps.personal_info.widgets import ImagePreviewWidget
@@ -30,6 +31,7 @@ class PersonForm(forms.ModelForm):
 
         self.helper.form_action = reverse('edit_person')
         self.helper.form_method = 'POST'
+        self.helper.form_class = 'person-edit-form'
 
         self.helper.help_text_inline = True
         self.helper.html5_required = True
@@ -38,20 +40,24 @@ class PersonForm(forms.ModelForm):
 
         self.helper.layout = Layout(
             Div(
-                HTML('<h2>Personal Info</h2>'),
-                'first_name',
-                'last_name',
-                'birth_date',
-                'photo',
+                Fieldset(
+                    'Personal Info',
+                    'first_name',
+                    'last_name',
+                    'birth_date',
+                    'photo',
+                ),
                 css_class='col-sm-6'
             ),
             Div(
-                HTML('<h2>Contacts</h2>'),
-                'email',
-                'jabber',
-                'skype',
-                'other_contacts',
-                'bio',
+                Fieldset(
+                    'Contacts',
+                    'email',
+                    'jabber',
+                    'skype',
+                    'other_contacts',
+                    'bio'
+                ),
                 css_class='col-sm-6'
             ),
             Div(
