@@ -55,7 +55,7 @@ def get_request_notification(request, last_request):
     ).count()
 
     queryset = WebRequest.objects.order_by('-time')[:10]
-    logger.info(queryset[0].time)
+    logger.info('AJAX queryset: %s' % queryset)
 
     logger.debug('AJAX requests notification count: %s' % count)
     return HttpResponse(
