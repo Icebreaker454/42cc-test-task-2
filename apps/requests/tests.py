@@ -7,6 +7,7 @@
 import json
 from datetime import datetime
 
+from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -186,3 +187,29 @@ class AJAXGetNotificationsTest(TestCase):
 
         self.assertEqual(resp_data['status'], 'success')
         self.assertEqual(resp_data['count'], 1)
+
+    def test_queryset_returning(self):
+        """ Test that the view returns data about last requests """
+        for i in range(12):
+            WebRequest.objects.create(
+                path='www.test.com/test/' + str(i),
+                method='GET',
+                user_agent='TEST AGENT',
+                is_secure=True,
+                is_ajax=False
+            )
+        resp = self.client.get(
+            self.url,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+
+        resp_data = json.loads(resp.content)
+
+        raw_models = WebRequest.objects.order_by('-time')[:10]
+
+        self.assertEqual(resp_data['status'], 'success')
+        self.assertEqual(resp_data['count'], 12)
+        self.assertEqual(
+            resp_data['queryset'],
+            serializers.serialize('json', raw_models)
+        )
