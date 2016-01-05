@@ -37,7 +37,7 @@
           <tr>
             <td>{{ forloop.counter }}</td>
             <td class="js-item js-path">{{ request.path }}</td>
-            <td class="js-item js-time">{{ request.time|date:"Y-m-d H:m:s" }}</td>
+            <td class="js-item js-time">{{ request.time|date:"Y-m-d H:i:s" }}</td>
             <td class="js-item js-useragent">{{ request.user_agent }}</td>
             <td class="js-item js-method">{{ request.method }}</td>
             <td class="js-item js-issecure">{{ request.is_secure|yesno:"+,-" }}</td>

@@ -6,9 +6,18 @@ function setLastRequest(Url, newRequest) {
   return Url.replace(number, newRequest);
 }
 
+function formatDate(date) {
+  return date.getUTCFullYear() + '-' + 
+    ((date.getUTCMonth() < 9) ? ('0' + (date.getUTCMonth() + 1)) : date.getUTCMonth() + 1 ) + '-' +
+    ((date.getUTCDate() < 10) ? ('0' + date.getUTCDate()) : date.getUTCDate()) + ' ' +
+    date.getUTCHours() + ':' +
+    ((date.getUTCMinutes() < 10) ? ('0' + date.getUTCMinutes()) : date.getUTCMinutes()) + ':' +
+    ((date.getUTCSeconds() < 10) ? ('0' + date.getUTCSeconds()) : date.getUTCSeconds())
+}
+
 $(document).ready(function() {
   var baseUrl = $('.js-requests').data('notification-url');
-  var window_focus;
+  var window_focus = true;
 
   $(window).focus(function() {
       window_focus = true;
@@ -22,25 +31,24 @@ $(document).ready(function() {
       success: function(data) {
         if (window_focus) {
           document.title = old_title;
-
-          var queryset = JSON.parse(data.queryset);
-          console.log(queryset);
-/*
-          // TODO: TABLE CHANGE
-          $('.js-requests tr').each(function(i) {
-            if (i < queryset.length) {
-              $('td.js-path', this).text(queryset[i].fields.path);
-              $('td.js-time', this).text(queryset[i].fields.time);
-              $('td.js-useragent', this).text(queryset[i].fields.user_agent);
-              $('td.js-method', this).text(queryset[i].fields.method);
-              $('td.js-issecure', this).text(queryset[i].fields.is_secure);
-              $('td.js-isajax', this).text(queryset[i].fields.is_ajax);
-            }
-          })
-*/
-          // TODO: BaseUrl
+          var queryset = $.parseJSON(data.queryset);
           baseUrl = setLastRequest(baseUrl, queryset[0].pk);
-          console.log(baseUrl)
+          var tableHtml;
+
+          for (var i = 0; i < queryset.length; i++) {
+            tableHtml = tableHtml +
+              '<tr>' +
+                '<td>' + (i + 1) + '</td>' +
+                '<td>' + queryset[i].fields.path + '</td>' +
+                '<td>' + formatDate(new Date(queryset[i].fields.time)) + '</td>' +
+                '<td>' + queryset[i].fields.user_agent + '</td>' +
+                '<td>' + queryset[i].fields.method + '</td>' +
+                '<td>' + (queryset[i].fields.is_secure ? '+' : '-') + '</td>' +
+                '<td>' + (queryset[i].fields.is_ajax ? '+' : '-') + '</td>' +
+              '</tr>'
+          }
+          $('.js-requests tbody').html(tableHtml);
+
         }
         else {
           if (data.count != 0) {
