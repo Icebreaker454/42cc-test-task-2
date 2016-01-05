@@ -4,9 +4,11 @@
 This file contains views for the requests
 application
 """
-import logging
 import json
+import logging
 
+
+from django.core import serializers
 from django.views.generic import ListView
 from django.http import HttpResponse
 from django.http import HttpResponseBadRequest
@@ -51,11 +53,16 @@ def get_request_notification(request, last_request):
     count = WebRequest.objects.filter(
         id__gt=last_request
     ).count()
+
+    queryset = WebRequest.objects.order_by('-time')[:10]
+    logger.info('AJAX queryset: %s' % queryset)
+
     logger.debug('AJAX requests notification count: %s' % count)
     return HttpResponse(
         json.dumps({
             'status': 'success',
             'count': count,
+            'queryset': serializers.serialize('json', queryset)
         }),
         content_type='application/json'
     )

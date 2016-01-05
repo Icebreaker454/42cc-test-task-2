@@ -36,12 +36,12 @@
         {% for request in requests %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ request.path }}</td>
-            <td>{{ request.time|date:"Y-m-d H:m:s" }}</td>
-            <td>{{ request.user_agent }}</td>
-            <td>{{ request.method }}</td>
-            <td>{{ request.is_secure|yesno:"+,-" }}</td>
-            <td>{{ request.is_ajax|yesno:"+,-" }}</td>
+            <td class="js-item js-path">{{ request.path }}</td>
+            <td class="js-item js-time">{{ request.time|date:"Y-m-d H:i:s" }}</td>
+            <td class="js-item js-useragent">{{ request.user_agent }}</td>
+            <td class="js-item js-method">{{ request.method }}</td>
+            <td class="js-item js-issecure">{{ request.is_secure|yesno:"+,-" }}</td>
+            <td class="js-item js-isajax">{{ request.is_ajax|yesno:"+,-" }}</td>
           </tr>  
         {% endfor %}
       </tbody>
