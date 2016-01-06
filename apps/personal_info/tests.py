@@ -107,16 +107,7 @@ class PersonEditPageTest(TestCase):
     """
     def setUp(self):
         """ Initialize testing data """
-        self.person = Person.objects.create(
-            first_name='Alex',
-            last_name='Messer',
-            birth_date=datetime(1996, 9, 5),
-            bio='Cadet at Lviv Army Academy',
-            email='messer1337@gmail.com',
-            skype='messer1337'
-        )
-        self.url = reverse('edit_person')
-        self.data = self.person.__dict__
+        Person.objects.all().delete()
         image = Image.open(
             StringIO(open(
                 os.path.join(
@@ -138,35 +129,66 @@ class PersonEditPageTest(TestCase):
             image_file.len,
             None
         )
-        self.data['photo'] = self.uploaded_file
+        self.person = Person.objects.create(
+            first_name='Alex',
+            last_name='Messer',
+            birth_date=datetime(1996, 9, 5),
+            bio='Cadet at Lviv Army Academy',
+            email='messer1337@gmail.com',
+            skype='messer1337',
+            photo=self.uploaded_file
+        )
+        self.url = reverse('edit_person')
 
     def test_first_person_data_on_edit_page(self):
-        """ Test that the editing instance is the first Person """
+        """ Test that the first Person is shown on edit page """
         resp = self.client.get(self.url)
 
         self.assertContains(resp, self.person.first_name)
         self.assertContains(resp, self.person.last_name)
         self.assertContains(
             resp,
-            datetime.strftime(self.person.birth_date, '%b %d, %Y')
+            datetime.strftime(self.person.birth_date, '%Y-%m-%d')
         )
+        self.assertContains(resp, self.person.photo)
         self.assertContains(resp, self.person.bio)
         self.assertContains(resp, self.person.email)
         self.assertContains(resp, self.person.skype)
 
     def test_first_person_edited(self):
-        """ Test that the view always edits the first person """
-        self.data['first_name'] = 'Alexander'
+        """ Test that the view edits the first person """
 
-        Person.objects.create(
-            first_name='Evan',
-            last_name='Dorms',
-            birth_date=datetime(1990, 1, 1),
-            bio='sample',
-            email='sample@sample.com'
+        resp = self.client.post(
+            self.url,
+            {
+                'first_name': 'Not Alex',
+                'last_name': 'Not Messer',
+                'birth_date': '1997-02-12',
+                'email': 'messer1338@gmail.com'
+            }
         )
+        resp = self.client.get(reverse('home'))
+        self.assertContains(resp, 'Not Alex')
+        self.assertContains(resp, 'Not Messer')
 
-        self.client.post(self.url, self.data)
+        self.assertContains(resp, 'Feb 12, 1997')
+        self.assertContains(resp, 'messer1338@gmail.com')
+
+    def test_cancel_button(self):
+        """ Test that cancel button does not make changes """
+        resp = self.client.post(
+            self.url,
+            {
+                'first_name': 'Not Alex',
+                'last_name': 'Not Messer',
+                'birth_date': '1997-02-12',
+                'email': 'messer1337@gmail.com',
+                'cancel_button': 'Not None'
+            }
+        )
+        self.assertRedirects(resp, reverse('home'))
+
+        self.assertEqual(self.person.first_name, 'Alex')
 
 
 class PersonTest(TestCase):

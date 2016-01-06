@@ -5,6 +5,8 @@ This file contains views for the personal_info app
 """
 import logging
 
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
 from django.views.generic.edit import UpdateView
 
@@ -41,3 +43,15 @@ class EditPerson(UpdateView):
     def get_object(self):
         """ View that gets the pbject to edit """
         return Person.objects.first()
+
+    def post(self, request, *args, **kwargs):
+        """ This method catches the cancel_button on a posted form """
+        if request.POST.get('cancel_button'):
+            return HttpResponseRedirect(
+                reverse('home')
+            )
+        return super(EditPerson, self).post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        """ URL to redirect to after success """
+        return reverse('home')

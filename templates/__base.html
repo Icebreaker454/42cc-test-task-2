@@ -18,6 +18,8 @@
     {% block extra_head %}{% endblock extra_head %}
   </head>
   <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
+    {% block loader %}
+    {% endblock loader %}
     <div class="container" id="container">
       <div class="row bordered-row" id="header">
         <div class="col-sm-12">

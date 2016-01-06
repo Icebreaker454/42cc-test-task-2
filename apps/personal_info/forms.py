@@ -9,7 +9,6 @@ from django.core.urlresolvers import reverse
 from crispy_forms.bootstrap import Div
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import HTML
 from crispy_forms.layout import Submit
 from crispy_forms.layout import Layout
 from crispy_forms.layout import Fieldset
