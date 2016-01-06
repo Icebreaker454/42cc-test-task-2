@@ -20,11 +20,32 @@
 	</div>
 {% endblock loader %}
 
+{% block errors %}
+  <div class="row bordered-row" id="warning" style="display: none;">
+    <div class="col-sm-12 error-message">
+      <h4 id="warning-text"></h4>
+    </div>
+  </div>
+{% endblock %}
+{% block messages %}
+  <div class="row bordered-row" id="message" style="display: none;">
+    <div class="col-sm-12 status-message">
+      <h4 id="message-text"></h4>
+    </div>
+  </div>
+{% endblock %}
+
 {% block content %}
-    {% crispy form %} 
+  {% crispy form %}
 {% endblock content %}
 
 {% block extra_head %}
-	<link rel="stylesheet" type="text/css" href="{% static 'css/loader.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/loader.css' %}">
 {% endblock extra_head %}
+
+{% block js %}
+  {{ block.super }}
+  <script src="{% static 'js/dist/jquery-forms.min.js' %}"></script>
+  <script src="{% static 'js/update.js' %}"></script>
+{% endblock js %}
 

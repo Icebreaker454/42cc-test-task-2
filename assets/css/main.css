@@ -9,6 +9,9 @@
 div.error-message {
     background-color: #ff7686;
 }
+div.status-message {
+    background-color: #67b168;
+}
 
 .text-center {
     text-align: center;

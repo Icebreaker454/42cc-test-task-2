@@ -11,6 +11,16 @@
   {% endif %}
 {% endblock errors %}
 
+{% block messages %}
+  {% if request.GET.status %}
+    <div class="row bordered-row" id="messsage">
+      <div class="col-sm-12 status-message">
+        <h4>{{ request.GET.status }}</h4>
+      </div>
+    </div>
+  {% endif %}
+{% endblock messages %}
+
 
 {% block content-left %}
   {% if object %}

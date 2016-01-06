@@ -5,6 +5,8 @@
     personal_info application.
 """
 import os
+import json
+
 from datetime import datetime
 from PIL import Image
 from StringIO import StringIO
@@ -109,14 +111,15 @@ class PersonEditPageTest(TestCase):
         """ Initialize testing data """
         Person.objects.all().delete()
         image = Image.open(
-            StringIO(open(
-                os.path.join(
-                    BASE_DIR,
-                    'assets',
-                    'img',
-                    'test_large.jpg'
-                )
-            ).read()
+            StringIO(
+                open(
+                    os.path.join(
+                        BASE_DIR,
+                        'assets',
+                        'img',
+                        'test_large.jpg'
+                    )
+                ).read()
             ),
         )
         image_file = StringIO()
@@ -167,6 +170,13 @@ class PersonEditPageTest(TestCase):
                 'email': 'messer1338@gmail.com'
             }
         )
+        self.assertRedirects(
+            resp,
+            (
+                '%s?status=Edited{0}successfully' % reverse('home')
+            ).format(r'%20')
+        )
+
         resp = self.client.get(reverse('home'))
         self.assertContains(resp, 'Not Alex')
         self.assertContains(resp, 'Not Messer')
@@ -186,9 +196,73 @@ class PersonEditPageTest(TestCase):
                 'cancel_button': 'Not None'
             }
         )
-        self.assertRedirects(resp, reverse('home'))
+        self.assertRedirects(
+            resp,
+            (
+                '%s?status=Editing{0}cancelled' % reverse('home')
+            ).format(r'%20')
+        )
 
         self.assertEqual(self.person.first_name, 'Alex')
+        self.assertEqual(self.person.last_name, 'Messer')
+
+    def test_ajax_valid_editing(self):
+        """ Test that AJAX post leads to successful json response """
+
+        resp = self.client.post(
+            self.url,
+            {
+                'first_name': 'Not Alex',
+                'last_name': 'Not Messer',
+                'birth_date': '1997-02-12',
+                'email': 'messer1337@gmail.com'
+            },
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(data['status'], 'success')
+        self.assertEqual(data['message'], 'Edited successfully')
+
+    def test_ajax_invalid_editing(self):
+        """ Test that AJAX post with invalid data leads to form errors """
+
+        resp = self.client.post(
+            self.url,
+            {
+                'first_name': 'Not Alex',
+                'last_name': 'Not Messer',
+                'birth_date': '1997-02-12',
+            },
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(data['status'], 'error')
+        self.assertEqual(data['message'], 'Please, correct the form errors')
+
+    def test_ajax_cancel_button(self):
+        """ Test that AJAX post with cancel button leads to successful
+            json response with message about cancelled editing """
+
+        resp = self.client.post(
+            self.url,
+            {
+                'first_name': 'Not Alex',
+                'last_name': 'Not Messer',
+                'birth_date': '1997-02-12',
+                'email': 'messer1337@gmail.com',
+                'cancel_button': 'Not None'
+            },
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(data['status'], 'success')
+        self.assertEqual(data['message'], 'Editing cancelled')
 
 
 class PersonTest(TestCase):
