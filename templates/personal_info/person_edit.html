@@ -4,6 +4,11 @@
 
 {% load crispy_forms_tags %}
 
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/dist/datepicker.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/loader.css' %}">
+{% endblock %}
+
 {% block loader %}
 	<div class="loader">
 		<div class="sk-cube-grid">
@@ -39,13 +44,10 @@
   {% crispy form %}
 {% endblock content %}
 
-{% block extra_head %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/loader.css' %}">
-{% endblock extra_head %}
-
 {% block js %}
   {{ block.super }}
   <script src="{% static 'js/dist/jquery-forms.min.js' %}"></script>
+  <script src="{% static 'js/dist/datepicker.min.js' %}"></script>
   <script src="{% static 'js/update.js' %}"></script>
 {% endblock js %}
 

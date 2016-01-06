@@ -48,6 +48,15 @@ function initForm() {
     return false;
 }
 
+function initDateField() {
+   $('input[name="birth_date"]').datepicker({
+       language: 'en',
+       dateFormat: 'yyyy-mm-dd'
+     });
+    return false;
+}
+
 $(document).ready(function () {
     initForm();
+    initDateField();
 });

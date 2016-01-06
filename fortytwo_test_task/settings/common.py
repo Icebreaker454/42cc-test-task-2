@@ -189,6 +189,10 @@ LOGGING = {
             'handlers': ['debug', 'info', 'warning', 'error'],
             'level': 'DEBUG',
         },
+        'core': {
+            'handlers': ['debug', 'info', 'warning', 'error'],
+            'level': 'DEBUG',
+        },
     }
 }
 

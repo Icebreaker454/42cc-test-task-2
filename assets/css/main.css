@@ -81,3 +81,9 @@ div.status-message {
     font-size: 18px;
     font-weight: normal;
 }
+
+.login-form {
+    max-width: 400px;
+    margin-top: 10%;
+    margin-left: 30%;
+}

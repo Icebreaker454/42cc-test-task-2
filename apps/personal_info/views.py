@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
 from django.views.generic.edit import UpdateView
 
+from apps.core.views import LoginRequiredMixin
 from apps.personal_info.models import Person
 from apps.personal_info.forms import PersonForm
 
@@ -35,7 +36,7 @@ class Home(TemplateView):
         return context
 
 
-class EditPerson(UpdateView):
+class EditPerson(LoginRequiredMixin, UpdateView):
     """
     The class-based view for editing Persons
     """

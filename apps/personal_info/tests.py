@@ -11,6 +11,7 @@ from datetime import datetime
 from PIL import Image
 from StringIO import StringIO
 
+from django.contrib.auth.models import User
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -142,6 +143,20 @@ class PersonEditPageTest(TestCase):
             photo=self.uploaded_file
         )
         self.url = reverse('edit_person')
+        user = User.objects.create_user(
+            'Test', 'test@testl.com', 'test'
+        )
+        self.client.login(username=user.username, password='test')
+
+    def test_login_required(self):
+        """ Test that only authenticated users can edit the Person model """
+        self.client.logout()
+        resp = self.client.get(self.url)
+
+        self.assertRedirects(
+            resp,
+            '%s?next=%s' % (reverse('login'), reverse('edit_person'))
+        )
 
     def test_first_person_data_on_edit_page(self):
         """ Test that the first Person is shown on edit page """
